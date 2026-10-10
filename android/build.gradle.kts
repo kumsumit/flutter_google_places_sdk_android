@@ -7,8 +7,8 @@ plugins {
 group = "com.msh.flutter_google_places_sdk"
 version = "1.0-SNAPSHOT"
 
-val kotlinVersion = providers.gradleProperty("kotlin_version").get()
-val googlePlacesVersion = providers.gradleProperty("google_places_version").get()
+val kotlinVersion = providers.gradleProperty("kotlin_version").orElse("2.4.20").get()
+val googlePlacesVersion = providers.gradleProperty("google_places_version").orElse("6.0.2").get()
 
 allprojects {
     repositories {
