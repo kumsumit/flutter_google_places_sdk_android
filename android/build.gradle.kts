@@ -1,5 +1,8 @@
-import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import com.android.build.api.dsl.LibraryExtension
+
+plugins {
+    id("com.android.library")
+}
 
 group = "com.msh.flutter_google_places_sdk"
 version = "1.0-SNAPSHOT"
@@ -7,25 +10,12 @@ version = "1.0-SNAPSHOT"
 val kotlinVersion = providers.gradleProperty("kotlin_version").get()
 val googlePlacesVersion = providers.gradleProperty("google_places_version").get()
 
-buildscript {
-    repositories {
-        google()
-        mavenCentral()
-    }
-
-    dependencies {
-        classpath("com.android.tools.build:gradle:9.4.1")
-    }
-}
-
 allprojects {
     repositories {
         google()
         mavenCentral()
     }
 }
-
-apply(plugin = "com.android.library")
 
 extensions.configure<LibraryExtension> {
     namespace = "com.msh.flutter_google_places_sdk"
@@ -37,8 +27,8 @@ extensions.configure<LibraryExtension> {
     }
 
     sourceSets {
-        getByName("main").java.srcDir("src/main/kotlin")
-        getByName("test").java.srcDir("src/test/kotlin")
+        getByName("main").kotlin.directories += "src/main/kotlin"
+        getByName("test").kotlin.directories += "src/test/kotlin"
     }
 
     defaultConfig {
@@ -48,12 +38,6 @@ extensions.configure<LibraryExtension> {
 
     lint {
         disable += "InvalidPackage"
-    }
-}
-
-tasks.withType<KotlinCompile>().configureEach {
-    compilerOptions {
-        jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21)
     }
 }
 
